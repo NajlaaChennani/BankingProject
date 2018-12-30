@@ -15,7 +15,7 @@ public class Virement {
 	
 	private String motif;
 	
-	private long id_beneficiare;
+	private long id_beneficiaire;
 	
 	private long id_verseur;
 	
@@ -32,10 +32,10 @@ public class Virement {
 
 
 
-	public Virement(String motif, long id_beneficiare, long id_verseur, double montant, String date) {
+	public Virement(String motif, long id_beneficiaire, long id_verseur, double montant, String date) {
 		super();
 		this.motif = motif;
-		this.id_beneficiare = id_beneficiare;
+		this.id_beneficiaire = id_beneficiaire;
 		this.id_verseur = id_verseur;
 		this.montant = montant;
 		this.date = date;
@@ -67,14 +67,14 @@ public class Virement {
 
 
 
-	public long getId_beneficiare() {
-		return id_beneficiare;
+	public long getId_beneficiaire() {
+		return id_beneficiaire;
 	}
 
 
 
-	public void setId_beneficiare(long id_beneficiare) {
-		this.id_beneficiare = id_beneficiare;
+	public void setId_beneficiaire(long id_beneficiaire) {
+		this.id_beneficiaire = id_beneficiaire;
 	}
 
 
