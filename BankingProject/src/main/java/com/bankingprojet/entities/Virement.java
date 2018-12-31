@@ -17,8 +17,9 @@ public class Virement {
 	
 	private long idbeneficiaire;
 	
-	
 	private long idverseur;
+	
+	private String typecompte;
 	
 	private double montant;
 	
@@ -33,11 +34,12 @@ public class Virement {
 
 
 
-	public Virement(String motif, long idbeneficiaire, long idverseur, double montant, String date) {
+	public Virement(String motif, long idbeneficiaire, long idverseur, String typecompte, double montant, String date) {
 		super();
 		this.motif = motif;
 		this.idbeneficiaire = idbeneficiaire;
 		this.idverseur = idverseur;
+		this.setTypecompte(typecompte);
 		this.montant = montant;
 		this.date = date;
 	}
@@ -88,6 +90,18 @@ public class Virement {
 
 	public void setIdverseur(long idverseur) {
 		this.idverseur = idverseur;
+	}
+
+
+
+	public String getTypecompte() {
+		return typecompte;
+	}
+
+
+
+	public void setTypecompte(String typecompte) {
+		this.typecompte = typecompte;
 	}
 
 

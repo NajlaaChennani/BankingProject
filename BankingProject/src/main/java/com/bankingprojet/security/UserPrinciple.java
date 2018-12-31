@@ -29,16 +29,14 @@ public class UserPrinciple implements UserDetails {
 	private String phone;
 	
 	private String address;
-	
-	private double soldebanquaire;
-	
+		
 	private double soldetelephonique;
     
 	private Collection<? extends GrantedAuthority> authorities;
 	
 	
 	public UserPrinciple(long id, String name, String username, String password, int age, String phone, String address,
-			double soldebanquaire, double soldetelephonique, Collection<? extends GrantedAuthority> authorities) {
+			double soldetelephonique, Collection<? extends GrantedAuthority> authorities) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -47,7 +45,6 @@ public class UserPrinciple implements UserDetails {
 		this.age = age;
 		this.phone = phone;
 		this.address = address;
-		this.soldebanquaire = soldebanquaire;
 		this.soldetelephonique = soldetelephonique;
 		this.authorities = authorities;
 	}
@@ -64,7 +61,6 @@ public class UserPrinciple implements UserDetails {
                 user.getAge(),
                 user.getAddress(),
                 user.getPhone(),
-                user.getSoldebanquaire(),
                 user.getSoldetelephonique(),
                 authorities
         );
@@ -107,9 +103,6 @@ public class UserPrinciple implements UserDetails {
 		return address;
 	}
 
-	public double getSoldebanquaire() {
-		return soldebanquaire;
-	}
 
 	public double getSoldetelephonique() {
 		return soldetelephonique;

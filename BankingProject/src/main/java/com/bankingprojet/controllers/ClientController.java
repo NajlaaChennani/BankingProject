@@ -15,9 +15,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.bankingprojet.entities.Compte;
 import com.bankingprojet.entities.Recharge;
 import com.bankingprojet.entities.User;
 import com.bankingprojet.entities.Virement;
+import com.bankingprojet.services.CompteRepository;
 import com.bankingprojet.services.RechargeRepository;
 import com.bankingprojet.services.UserRepository;
 import com.bankingprojet.services.VirementRepository;
@@ -35,31 +37,54 @@ public class ClientController {
 	@Autowired
 	RechargeRepository rechargeRepository;
 	
+	@Autowired
+	CompteRepository compteRepository;
+	
 	java.util.Date date = new java.util.Date();
 	String format = "dd/MM/yy H:mm:ss"; 
 	java.text.SimpleDateFormat formater = new java.text.SimpleDateFormat(format); 
 	
-	@PostMapping(value = "/addvirement")
-	public Virement postVirement(@RequestBody Virement virement) {
+	@PostMapping(value = "/addvirement/{username}")
+	public Virement postVirement(@RequestBody Virement virement, @PathVariable String username) {
 		System.out.println("virement");
 		String datevirement = formater.format(date);
-		Optional<User> _verseur = userRepository.findById(virement.getIdverseur());		
+		Optional<User> _verseur = userRepository.findByUsername(username);		
 		Optional<User> _beneficiaire = userRepository.findById(virement.getIdbeneficiaire());
 		
 		User verseur = _verseur.get();
 		User beneficiaire = _beneficiaire.get();
 		
-		verseur.setSoldebanquaire((double)verseur.getSoldebanquaire()-virement.getMontant());
-		userRepository.save(verseur);		
-		beneficiaire.setSoldebanquaire((double)beneficiaire.getSoldebanquaire()+virement.getMontant());
-		userRepository.save(beneficiaire);
+		Compte compteverseur = new Compte();
+		Compte comptebenef = new Compte();
 		
-		Virement _virement = virementRepository.save(new Virement(virement.getMotif(), virement.getIdbeneficiaire(), virement.getIdverseur()
-				, virement.getMontant(),datevirement));
+		List<Compte> comptesverseur = compteRepository.findByIduser(verseur.getId());
+		List<Compte> comptesbenef = compteRepository.findByIduser(beneficiaire.getId());
+		
+		for(int i=0;i<comptesverseur.size();i++)
+		{
+			if(comptesverseur.get(i).getType().equals(virement.getTypecompte()))
+			{
+				compteverseur = comptesverseur.get(i);
+			}
+		}
+		for(int i=0;i<comptesbenef.size();i++)
+		{
+			if(comptesbenef.get(i).getType().equals("Compte courant"))
+			{
+				comptebenef = comptesbenef.get(i);
+			}
+		}
+		
+		compteverseur.setSolde(compteverseur.getSolde()-virement.getMontant());
+		comptebenef.setSolde(comptebenef.getSolde()+virement.getMontant());
+		
+		compteRepository.save(compteverseur);
+		compteRepository.save(comptebenef);
+		Virement _virement = virementRepository.save(new Virement(virement.getMotif(), virement.getIdbeneficiaire(), verseur.getId(),
+				virement.getTypecompte(), virement.getMontant(),datevirement));
 		return _virement;
 	}
-	
-	
+		
 	@PostMapping(value = "/addrecharge/{username}")
 	public Recharge postRecharge(@RequestBody Recharge recharge, @PathVariable String username)
 	{
@@ -70,15 +95,38 @@ public class ClientController {
 		
 		User user = _user.get();
 		User beneficiaire = _beneficiaire.get();
+		List<Compte> comptesverseur = compteRepository.findByIduser(user.getId());
+		Compte compteverseur = new Compte();
 		
-		user.setSoldebanquaire((double)user.getSoldebanquaire()-recharge.getMontant());
-		userRepository.save(user);
+		for(int i=0;i<comptesverseur.size();i++)
+		{
+			if(comptesverseur.get(i).getType().equals("Compte courant"))
+			{
+				compteverseur = comptesverseur.get(i);
+			}
+		}
+		
+		compteverseur.setSolde((double)compteverseur.getSolde()-recharge.getMontant());
+		compteRepository.save(compteverseur);
+		
 		beneficiaire.setSoldetelephonique((double)beneficiaire.getSoldetelephonique()+recharge.getMontant());
 		userRepository.save(beneficiaire);
 		
 		
 		Recharge _recharge = rechargeRepository.save(new Recharge(recharge.getPhone(), user.getId(), recharge.getMontant(), daterecharge));
 		return _recharge;
+	}
+	
+	@GetMapping("/comptesuser/{username}")
+	public List<Compte> getComptes(@PathVariable String username)
+	{
+		System.out.println("comptes d'un client");
+
+        Optional<User> user = userRepository.findByUsername(username);		
+		User _user = user.get();
+		
+		List<Compte> listcomptes = compteRepository.findByIduser(_user.getId());
+		return listcomptes;
 	}
 	
 	@GetMapping("/allvirements/{username}")
