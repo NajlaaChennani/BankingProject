@@ -11,9 +11,9 @@ import javax.persistence.Table;
 public class Recharge {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id_recharge;
+	private long idrecharge;
 	
-	private long id_user;
+	private long iduser;
 	
 	private String phone;
 	
@@ -21,9 +21,9 @@ public class Recharge {
 	
 	private String date;
 
-	public Recharge(String phone, long id_user, double montant, String date) {
+	public Recharge(String phone, long iduser, double montant, String date) {
 		super();
-		this.id_user = id_user;
+		this.iduser = iduser;
 		this.phone = phone;
 		this.montant = montant;
 		this.date = date;
@@ -34,20 +34,20 @@ public class Recharge {
 		// TODO Auto-generated constructor stub
 	}
 
-	public long getId_recharge() {
-		return id_recharge;
+	public long getIdrecharge() {
+		return idrecharge;
 	}
 
-	public void setId_recharge(long id_recharge) {
-		this.id_recharge = id_recharge;
+	public void setIdrecharge(long idrecharge) {
+		this.idrecharge = idrecharge;
 	}
 
 	public long getId_user() {
-		return id_user;
+		return iduser;
 	}
 
-	public void setId_user(long id_user) {
-		this.id_user = id_user;
+	public void setId_user(long iduser) {
+		this.iduser = iduser;
 	}
 
 	public String getPhone() {

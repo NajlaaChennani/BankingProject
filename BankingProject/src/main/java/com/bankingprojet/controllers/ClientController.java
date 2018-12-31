@@ -1,10 +1,13 @@
 package com.bankingprojet.controllers;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -38,10 +41,10 @@ public class ClientController {
 	
 	@PostMapping(value = "/addvirement")
 	public Virement postVirement(@RequestBody Virement virement) {
-		System.out.println("viremet");
+		System.out.println("virement");
 		String datevirement = formater.format(date);
-		Optional<User> _verseur = userRepository.findById(virement.getId_verseur());		
-		Optional<User> _beneficiaire = userRepository.findById(virement.getId_beneficiaire());
+		Optional<User> _verseur = userRepository.findById(virement.getIdverseur());		
+		Optional<User> _beneficiaire = userRepository.findById(virement.getIdbeneficiaire());
 		
 		User verseur = _verseur.get();
 		User beneficiaire = _beneficiaire.get();
@@ -51,7 +54,7 @@ public class ClientController {
 		beneficiaire.setSoldebanquaire((double)beneficiaire.getSoldebanquaire()+virement.getMontant());
 		userRepository.save(beneficiaire);
 		
-		Virement _virement = virementRepository.save(new Virement(virement.getMotif(), virement.getId_beneficiaire(), virement.getId_verseur()
+		Virement _virement = virementRepository.save(new Virement(virement.getMotif(), virement.getIdbeneficiaire(), virement.getIdverseur()
 				, virement.getMontant(),datevirement));
 		return _virement;
 	}
@@ -74,7 +77,42 @@ public class ClientController {
 		userRepository.save(beneficiaire);
 		
 		
-		Recharge _recharge = rechargeRepository.save(new Recharge(recharge.getPhone(), beneficiaire.getId(), recharge.getMontant(), daterecharge));
+		Recharge _recharge = rechargeRepository.save(new Recharge(recharge.getPhone(), user.getId(), recharge.getMontant(), daterecharge));
 		return _recharge;
+	}
+	
+	@GetMapping("/allvirements/{username}")
+	public List<Virement> getAllVirements(@PathVariable String username)
+	{
+		System.out.println("Tous les Virements...");
+		
+		Optional<User> user = userRepository.findByUsername(username);
+		
+		User _user = user.get();
+		
+		List<Virement> virements = virementRepository.findByIdverseur(_user.getId());
+		return virements;
+	}
+	
+	@GetMapping("/allrecharges/{username}")
+	public List<Recharge> getAllRecharges(@PathVariable String username)
+	{
+		System.out.println("Toutes les recharges...");
+		
+		Optional<User> user = userRepository.findByUsername(username);
+		
+		User _user = user.get();
+		
+		List<Recharge> recharges = rechargeRepository.findByIduser(_user.getId());
+		return recharges;
+	}
+	
+	@GetMapping("/getclient/{username}")
+	public User getClient(@PathVariable String username)
+	{
+		System.out.println("détails d'un client");
+        Optional<User> user = userRepository.findByUsername(username);		
+		User _user = user.get();
+		return _user;
 	}
 }

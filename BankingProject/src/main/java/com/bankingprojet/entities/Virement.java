@@ -11,13 +11,14 @@ import javax.persistence.Table;
 public class Virement {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id_virement;
+	private long idvirement;
 	
 	private String motif;
 	
-	private long id_beneficiaire;
+	private long idbeneficiaire;
 	
-	private long id_verseur;
+	
+	private long idverseur;
 	
 	private double montant;
 	
@@ -32,25 +33,25 @@ public class Virement {
 
 
 
-	public Virement(String motif, long id_beneficiaire, long id_verseur, double montant, String date) {
+	public Virement(String motif, long idbeneficiaire, long idverseur, double montant, String date) {
 		super();
 		this.motif = motif;
-		this.id_beneficiaire = id_beneficiaire;
-		this.id_verseur = id_verseur;
+		this.idbeneficiaire = idbeneficiaire;
+		this.idverseur = idverseur;
 		this.montant = montant;
 		this.date = date;
 	}
 
 
 
-	public long getId_virement() {
-		return id_virement;
+	public long getIdvirement() {
+		return idvirement;
 	}
 
 
 
-	public void setId_virement(long id_virement) {
-		this.id_virement = id_virement;
+	public void setIdvirement(long idvirement) {
+		this.idvirement = idvirement;
 	}
 
 
@@ -67,26 +68,26 @@ public class Virement {
 
 
 
-	public long getId_beneficiaire() {
-		return id_beneficiaire;
+	public long getIdbeneficiaire() {
+		return idbeneficiaire;
 	}
 
 
 
-	public void setId_beneficiaire(long id_beneficiaire) {
-		this.id_beneficiaire = id_beneficiaire;
+	public void setIdbeneficiaire(long idbeneficiaire) {
+		this.idbeneficiaire = idbeneficiaire;
 	}
 
 
 
-	public long getId_verseur() {
-		return id_verseur;
+	public long getIdverseur() {
+		return idverseur;
 	}
 
 
 
-	public void setId_verseur(long id_verseur) {
-		this.id_verseur = id_verseur;
+	public void setIdverseur(long idverseur) {
+		this.idverseur = idverseur;
 	}
 
 
