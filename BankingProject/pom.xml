@@ -44,6 +44,7 @@
 	        <artifactId>spring-boot-starter-thymeleaf</artifactId>
     	</dependency>
 		<dependency>
+		
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
 			<scope>runtime</scope>
@@ -62,6 +63,32 @@
 			<artifactId>jjwt</artifactId>
 			<version>0.9.0</version>
 		</dependency>
+		<dependency>
+		    <groupId>org.webjars</groupId>
+		    <artifactId>bootstrap</artifactId>
+		    <version>3.3.7</version>
+		</dependency>
+		<dependency>
+		    <groupId>org.webjars.bower</groupId>
+		    <artifactId>font-awesome</artifactId>
+		    <version>4.6.1</version>
+		</dependency>
+		<dependency>
+		
+		    <groupId>org.webjars.bower</groupId>
+		    <artifactId>nprogress</artifactId>
+		    <version>0.2.0</version>
+		</dependency>
+		<dependency>
+		    <groupId>org.webjars.bower</groupId>
+		    <artifactId>animate.css</artifactId>
+		    <version>3.5.1</version>
+		</dependency>
+		<dependency>
+        <groupId>org.webjars</groupId>
+        <artifactId>webjars-locator</artifactId>
+        <version>0.30</version>
+    </dependency>
 	</dependencies>
 	<build>
 		<plugins>

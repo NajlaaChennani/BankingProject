@@ -25,7 +25,13 @@ public class Role {
 	 @Column(length = 60)
 	 private Rolename name;
 	 
-	 public Rolename getName() {
+	 public Role(long id, Rolename name) {
+		super();
+		this.id = id;
+		this.name = name;
+	}
+
+	public Rolename getName() {
 		return name;
 	}
 
