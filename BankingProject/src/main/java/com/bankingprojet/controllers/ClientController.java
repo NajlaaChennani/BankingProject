@@ -163,4 +163,13 @@ public class ClientController {
 		User _user = user.get();
 		return _user;
 	}
+	
+	@GetMapping("getCompteById/{idcompte}")
+	public Compte getCompte(@PathVariable long idcompte)
+	{
+		System.out.println("retour d'un compte");
+        Optional<Compte> compte = compteRepository.findById(idcompte);		
+		Compte _compte = compte.get();
+		return _compte;
+	}
 }
