@@ -146,7 +146,7 @@ public class ClientController {
 	public List<Recharge> getAllRecharges(@PathVariable String username)
 	{
 		System.out.println("Toutes les recharges...");
-		
+
 		Optional<User> user = userRepository.findByUsername(username);
 		
 		User _user = user.get();
@@ -171,5 +171,23 @@ public class ClientController {
         Optional<Compte> compte = compteRepository.findById(idcompte);		
 		Compte _compte = compte.get();
 		return _compte;
+	}
+	
+	@GetMapping("/getcomptebyidandtype/{username}/{type}")
+	public Compte getCompteByIdandType(@PathVariable String username, @PathVariable String type)
+	{
+		System.out.println("retour d'un compte depuis l id et le type");
+		Optional<User> user = userRepository.findByUsername(username);		
+		User _user = user.get();
+        Compte compte = compteRepository.findByIduserAndType(_user.getId(), type);		
+		return compte;
+	}
+	
+	@GetMapping("/getuserbyphone/{phone}")
+	public User getUserByPhone(@PathVariable String phone)
+	{
+		 Optional<User> user = userRepository.findByPhone(phone);		
+			User _user = user.get();
+			return _user;
 	}
 }

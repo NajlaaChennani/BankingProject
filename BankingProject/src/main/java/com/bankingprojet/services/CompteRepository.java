@@ -8,4 +8,5 @@ import com.bankingprojet.entities.Compte;
 
 public interface CompteRepository extends CrudRepository<Compte, Long>{
 	List<Compte> findByIduser(long iduser);
+	Compte findByIduserAndType(long iduser, String type);
 }
