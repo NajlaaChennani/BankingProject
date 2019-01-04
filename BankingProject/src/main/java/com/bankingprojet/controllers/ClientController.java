@@ -1,10 +1,13 @@
 package com.bankingprojet.controllers;
 
 import java.util.ArrayList;
+
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -54,26 +57,9 @@ public class ClientController {
 		User verseur = _verseur.get();
 		User beneficiaire = _beneficiaire.get();
 		
-		Compte compteverseur = new Compte();
-		Compte comptebenef = new Compte();
+		Compte compteverseur = compteRepository.findByIduserAndType(verseur.getId(), virement.getTypecompte());
+		Compte comptebenef = compteRepository.findByIduserAndType(beneficiaire.getId(), "Compte courant");
 		
-		List<Compte> comptesverseur = compteRepository.findByIduser(verseur.getId());
-		List<Compte> comptesbenef = compteRepository.findByIduser(beneficiaire.getId());
-		
-		for(int i=0;i<comptesverseur.size();i++)
-		{
-			if(comptesverseur.get(i).getType().equals(virement.getTypecompte()))
-			{
-				compteverseur = comptesverseur.get(i);
-			}
-		}
-		for(int i=0;i<comptesbenef.size();i++)
-		{
-			if(comptesbenef.get(i).getType().equals("Compte courant"))
-			{
-				comptebenef = comptesbenef.get(i);
-			}
-		}
 		
 		compteverseur.setSolde(compteverseur.getSolde()-virement.getMontant());
 		comptebenef.setSolde(comptebenef.getSolde()+virement.getMontant());
@@ -94,24 +80,17 @@ public class ClientController {
 		Optional<User> _beneficiaire = userRepository.findByPhone(recharge.getPhone());
 		
 		User user = _user.get();
-		User beneficiaire = _beneficiaire.get();
-		List<Compte> comptesverseur = compteRepository.findByIduser(user.getId());
-		Compte compteverseur = new Compte();
-		
-		for(int i=0;i<comptesverseur.size();i++)
-		{
-			if(comptesverseur.get(i).getType().equals("Compte courant"))
-			{
-				compteverseur = comptesverseur.get(i);
-			}
-		}
-		
+		User beneficiaire = _beneficiaire.get();
+			Compte compteverseur =compteRepository.findByIduserAndType(user.getId(), "Compte courant");;
+	
+
+			
 		compteverseur.setSolde((double)compteverseur.getSolde()-recharge.getMontant());
 		compteRepository.save(compteverseur);
 		
 		beneficiaire.setSoldetelephonique((double)beneficiaire.getSoldetelephonique()+recharge.getMontant());
 		userRepository.save(beneficiaire);
-		
+			
 		
 		Recharge _recharge = rechargeRepository.save(new Recharge(recharge.getPhone(), user.getId(), recharge.getMontant(), daterecharge));
 		return _recharge;
@@ -156,12 +135,15 @@ public class ClientController {
 	}
 	
 	@GetMapping("/getclient/{username}")
-	public User getClient(@PathVariable String username)
+	public ResponseEntity<User> getClient(@PathVariable String username)
 	{
-		System.out.println("détails d'un client");
+		System.out.println("détails ddd'un client");
         Optional<User> user = userRepository.findByUsername(username);		
 		User _user = user.get();
-		return _user;
+		if (_user == null) {
+			  return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
+			  }
+			  return new ResponseEntity<User>(_user, HttpStatus.OK);
 	}
 	
 	@GetMapping("getCompteById/{idcompte}")
