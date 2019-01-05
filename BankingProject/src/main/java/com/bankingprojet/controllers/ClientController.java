@@ -18,10 +18,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.bankingprojet.entities.Agence;
 import com.bankingprojet.entities.Compte;
 import com.bankingprojet.entities.Recharge;
 import com.bankingprojet.entities.User;
 import com.bankingprojet.entities.Virement;
+import com.bankingprojet.services.AgenceRepository;
 import com.bankingprojet.services.CompteRepository;
 import com.bankingprojet.services.RechargeRepository;
 import com.bankingprojet.services.UserRepository;
@@ -42,6 +44,9 @@ public class ClientController {
 	
 	@Autowired
 	CompteRepository compteRepository;
+	
+	@Autowired
+	AgenceRepository agenceRepository;
 	
 	java.util.Date date = new java.util.Date();
 	String format = "dd/MM/yy H:mm:ss"; 
@@ -171,5 +176,13 @@ public class ClientController {
 		 Optional<User> user = userRepository.findByPhone(phone);		
 			User _user = user.get();
 			return _user;
+	}
+	
+	@GetMapping("/getagence/{idagence}")
+	public Agence getAgence(@PathVariable long idagence)
+	{
+		 Optional<Agence> agence = agenceRepository.findById(idagence);		
+			Agence _agence = agence.get();
+			return _agence;
 	}
 }
