@@ -63,9 +63,10 @@ public class ClientController {
 		User beneficiaire = _beneficiaire.get();
 		
 		Compte compteverseur = compteRepository.findByIduserAndType(verseur.getId(), virement.getTypecompte());
-		Compte comptebenef = compteRepository.findByIduserAndType(beneficiaire.getId(), "Compte courant");
+		Optional<Compte> _comptebenef = compteRepository.findById(beneficiaire.getId());
+		Compte comptebenef = _comptebenef.get();
 		
-		
+		System.out.println(comptebenef.getIdcompte());
 		compteverseur.setSolde(compteverseur.getSolde()-virement.getMontant());
 		comptebenef.setSolde(comptebenef.getSolde()+virement.getMontant());
 		
@@ -163,7 +164,7 @@ public class ClientController {
 	@GetMapping("/getcomptebyidandtype/{username}/{type}")
 	public Compte getCompteByIdandType(@PathVariable String username, @PathVariable String type)
 	{
-		System.out.println("retour d'un compte depuis l id et le type");
+		System.out.println("retour d'un compte depuis l id " + username + "et le type");
 		Optional<User> user = userRepository.findByUsername(username);		
 		User _user = user.get();
         Compte compte = compteRepository.findByIduserAndType(_user.getId(), type);		
