@@ -21,17 +21,23 @@ public class Compte {
 	
 	private double solde;
 	
+	private boolean etat;
+	
+	private long idagence;
+	
 	public Compte() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public Compte(long iduser, String type, String date, double solde) {
+	public Compte(long iduser, String type, String date, double solde, boolean etat, long idagence) {
 		super();
 		this.iduser = iduser;
 		this.type = type;
 		this.date = date;
 		this.solde = solde;
+		this.etat = etat;
+		this.idagence = idagence;
 	}
 
 	public long getIdcompte() {
@@ -73,6 +79,23 @@ public class Compte {
 	public void setSolde(double solde) {
 		this.solde = solde;
 	}
+
+	public boolean isEtat() {
+		return etat;
+	}
+
+	public void setEtat(boolean etat) {
+		this.etat = etat;
+	}
+
+	public long getIdagence() {
+		return idagence;
+	}
+
+	public void setIdagence(long idagence) {
+		this.idagence = idagence;
+	}
+	
 	
 	
 }
