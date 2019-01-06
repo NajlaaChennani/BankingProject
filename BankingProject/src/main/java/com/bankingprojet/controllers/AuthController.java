@@ -31,7 +31,7 @@ import com.bankingprojet.security.JwtProvider;
 import com.bankingprojet.services.RoleRepository;
 import com.bankingprojet.services.UserRepository;
 
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {

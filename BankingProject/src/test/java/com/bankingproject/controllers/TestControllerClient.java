@@ -2,69 +2,58 @@ package com.bankingproject.controllers;
 
 import static org.junit.Assert.*;
 
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
 import java.util.Optional;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
-import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import com.bankingproject.config.TestUtils;
-import com.bankingprojet.entities.Compte;
+import com.bankingprojet.controllers.ClientController;
 import com.bankingprojet.entities.User;
-import com.bankingprojet.entities.Virement;
 import com.bankingprojet.services.UserRepository;
 import com.bankingprojet.services.VirementRepository;
 
 
+@RunWith(SpringRunner.class)
+@ContextConfiguration(classes = {ClientController.class })
+@AutoConfigureMockMvc
+public class TestControllerClient {
 
-public class TestClientController{
-	
 	@Autowired
 	private MockMvc mockMvc;
 	
-	@Autowired
-	@MockBean
+
+	@Mock
 	VirementRepository virementRepository;
 	
-	@Autowired
-	@MockBean
+
+	@Mock
 	UserRepository userRepository;
-	
 	@Before
-	public void setUp() {
+	public void setUp() throws Exception {
 	}
 
 	@Test
 	public void testPostVirement() {
 		fail("Not yet implemented");
-        /*String uri = "/addvirement/najlaa";
-		
-		Virement virement = new Virement();
-		virement.setIdvirement(20);
-		virement.setIdbeneficiaire(2);
-		virement.setIdverseur(1);
-		virement.setDate("04/01/2019");
-		virement.setMontant(2000);
-		virement.setMotif("Test");
-		virement.setTypecompte("Compte courant");
-		
-		Mockito.when(virementRepository.save(Mockito.any(Virement.class))).thenReturn(virement);
-		
-		MvcResult result = mockMvc.p MockMvcRequestBuilders.post(uri).accept(MediaType.APPLICATION_JSON_VALUE)).andReturn();*/
 	}
 
 	@Test
@@ -73,16 +62,7 @@ public class TestClientController{
 	}
 
 	@Test
-	public void testGetComptes() throws Exception{
-		/*String uri = "/comptesuser/najlaa";
-		MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.get(uri)
-			      .accept(MediaType.APPLICATION_JSON_VALUE)).andReturn();
-			   
-		int status = mvcResult.getResponse().getStatus();
-		assertEquals(200, status);
-		String content = mvcResult.getResponse().getContentAsString();
-		Compte[] ComptesListOfUser = super.mapFromJson(content,Compte[].class);
-		assertTrue(ComptesListOfUser.length > 0);*/
+	public void testGetComptes() {
 		fail("Not yet implemented");
 	}
 
@@ -133,6 +113,11 @@ public class TestClientController{
 
 	@Test
 	public void testGetUserByPhone() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	public void testGetAgence() {
 		fail("Not yet implemented");
 	}
 

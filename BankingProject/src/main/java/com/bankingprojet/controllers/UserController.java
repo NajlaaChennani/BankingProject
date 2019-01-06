@@ -12,7 +12,7 @@ import com.bankingprojet.entities.User;
 import com.bankingprojet.services.UserRepository;
 
 
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "*")
 @RestController
 public class UserController {
 	@Autowired

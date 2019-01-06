@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import com.bankingprojet.entities.Agence;
 import com.bankingprojet.entities.Compte;
@@ -30,6 +31,7 @@ import com.bankingprojet.services.UserRepository;
 import com.bankingprojet.services.VirementRepository;
 
 @CrossOrigin(origins = "*")
+@EnableWebMvc
 @RequestMapping(value = "/api/banking")
 @RestController
 public class ClientController {
@@ -89,7 +91,7 @@ public class ClientController {
 		User beneficiaire = _beneficiaire.get();
 			Compte compteverseur =compteRepository.findByIduserAndType(user.getId(), "Compte courant");;
 	
-
+			System.out.println(compteverseur.getSolde());
 			
 		compteverseur.setSolde((double)compteverseur.getSolde()-recharge.getMontant());
 		compteRepository.save(compteverseur);
@@ -161,6 +163,7 @@ public class ClientController {
 		return _compte;
 	}
 	
+	
 	@GetMapping("/getcomptebyidandtype/{username}/{type}")
 	public Compte getCompteByIdandType(@PathVariable String username, @PathVariable String type)
 	{
@@ -184,6 +187,8 @@ public class ClientController {
 	{
 		 Optional<Agence> agence = agenceRepository.findById(idagence);		
 			Agence _agence = agence.get();
+			System.out.println(_agence.getName());
 			return _agence;
+
 	}
 }
