@@ -44,7 +44,16 @@ public class Virement {
 		this.date = date;
 	}
 
-
+	public Virement(long idvirement, String motif, long idbeneficiaire, long idverseur, String typecompte, double montant, String date) {
+		super();
+		this.idvirement = idvirement;
+		this.motif = motif;
+		this.idbeneficiaire = idbeneficiaire;
+		this.idverseur = idverseur;
+		this.setTypecompte(typecompte);
+		this.montant = montant;
+		this.date = date;
+	}
 
 	public long getIdvirement() {
 		return idvirement;

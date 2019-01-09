@@ -34,6 +34,13 @@ public class Agence {
 		this.adresse = adresse;
 	}
 
+	public Agence(long idagence, String name, String adresse) {
+		super();
+		this.idagence = idagence;
+		this.name = name;
+		this.adresse = adresse;
+	}
+	
 	public long getIdagence() {
 		return idagence;
 	}

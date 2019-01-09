@@ -1,4 +1,4 @@
-package com.bankingproject.config;
+package com.bankingproject.controllers.config;
 
 import java.util.List;
 

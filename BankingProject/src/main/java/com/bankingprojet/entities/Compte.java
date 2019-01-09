@@ -40,6 +40,17 @@ public class Compte {
 		this.idagence = idagence;
 	}
 
+	public Compte(long idcompte, long iduser, String type, String date, double solde, boolean etat, long idagence) {
+		super();
+		this.idcompte = idcompte;
+		this.iduser = iduser;
+		this.type = type;
+		this.date = date;
+		this.solde = solde;
+		this.etat = etat;
+		this.idagence = idagence;
+	}
+	
 	public long getIdcompte() {
 		return idcompte;
 	}

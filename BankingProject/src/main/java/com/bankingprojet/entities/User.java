@@ -62,6 +62,20 @@ public class User {
 		this.address = address;
 		this.soldetelephonique = soldetelephonique;
 	}
+	
+	
+	public User(long id, String name, String username, String password, int age, String phone, String address,
+			double soldetelephonique) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.username = username;
+		this.password = password;
+		this.age = age;
+		this.phone = phone;
+		this.address = address;
+		this.soldetelephonique = soldetelephonique;
+	}
 
 	public User() {
 		super();

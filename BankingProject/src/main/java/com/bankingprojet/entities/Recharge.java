@@ -30,6 +30,15 @@ public class Recharge {
 		this.date = date;
 	}
 
+	public Recharge(long idrecharge, String phone, long iduser, double montant, String date) {
+		super();
+		this.idrecharge = idrecharge;
+		this.iduser = iduser;
+		this.phone = phone;
+		this.montant = montant;
+		this.date = date;
+	}
+	
 	public Recharge() {
 		super();
 		// TODO Auto-generated constructor stub

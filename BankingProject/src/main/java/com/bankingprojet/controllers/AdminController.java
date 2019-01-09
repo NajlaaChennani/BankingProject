@@ -51,10 +51,10 @@ public class AdminController {
 	PasswordEncoder encoder;
 	
 	@PostMapping("/addAgence")
-	public Agence addAgence(@RequestBody JSONObject requestAgence) {
+	public ResponseEntity<Agence> addAgence(@RequestBody JSONObject requestAgence) {
 		Agence agence = new Agence(requestAgence.get("name").toString(), requestAgence.get("adresse").toString());
 		agenceRepository.save(agence);
-		return agence;
+		return new ResponseEntity<Agence>(agence, HttpStatus.CREATED);
 	}
 	
 	@GetMapping("/allagences")
@@ -81,17 +81,15 @@ public class AdminController {
 		}
 		else
 		{
-			
+			System.out.println("1" + userr.equals(null));
+			System.out.println("2" + this.passwordEncoder().matches(password, userr.getPassword()));
+			System.out.println("3" + userr.getRoles().contains(role));
 			System.out.println("Log admin failed");
 			return new ResponseEntity<String>("fail", HttpStatus.OK);
 		}
 	}
 	@PostMapping("/addAgent")
-	public ResponseEntity<?> addAgent(@RequestBody JSONObject requestAgent){
-		if (userRepository.existsByUsername(requestAgent.get("username").toString())) {
-			return new ResponseEntity<>(new ResponseMessage("Fail -> Username is already taken!"),
-					HttpStatus.BAD_REQUEST);
-		}
+	public ResponseEntity<User> addAgent(@RequestBody JSONObject requestAgent){
 
 		// Creating user's account
 		User user = new User(requestAgent.get("name").toString(), requestAgent.get("username").toString(), 
@@ -105,7 +103,7 @@ public class AdminController {
 		roles.add(pmRole);		
 		user.setRoles(roles);
 		userRepository.save(user);
-		return new ResponseEntity<>(new ResponseMessage("Agent registered successfully!"), HttpStatus.OK);
+		return new ResponseEntity<User>(user, HttpStatus.CREATED);
 	}
 	
 	
@@ -120,28 +118,27 @@ public class AdminController {
 	@DeleteMapping("/deleteAgent/{username}")
 	public ResponseEntity<?> deleteAgent(@PathVariable("username") String username)
 	{
-		System.out.println("test");
 		Optional<User> user = userRepository.findByUsername(username);
 		User _user = user.get();
 		if(_user.getRoles().size()>1)
 		{
 			System.out.println("test1");
 			userRepository.deleteRoleFromUsersWithRole(2, _user.getId());
-			return new ResponseEntity<>(new ResponseMessage("More than 1 role !"), HttpStatus.OK);
+			return new ResponseEntity<>(new ResponseMessage("More than 1 role !"), HttpStatus.GONE);
 		}
 		else
 		{
 			System.out.println("test2");
 			userRepository.deleteByUsername(username);
-			return new ResponseEntity<>(new ResponseMessage("Agent deleted successfully!"), HttpStatus.OK);
+			return new ResponseEntity<>(new ResponseMessage("Agent deleted successfully!"), HttpStatus.GONE);
 		}
 	}
 	
 	@Transactional
 	@DeleteMapping("/deleteAgence/{name}")
-	public ResponseEntity<?> deleteAgence(@PathVariable("name") String name){
+	public ResponseEntity<Void> deleteAgence(@PathVariable("name") String name){
 		agenceRepository.deleteByName(name);
-		return new ResponseEntity<>(new ResponseMessage("Agence deleted successfully!"), HttpStatus.OK);
+		return new ResponseEntity<Void>(HttpStatus.GONE);
 	}
 	
 	public PasswordEncoder passwordEncoder() {
