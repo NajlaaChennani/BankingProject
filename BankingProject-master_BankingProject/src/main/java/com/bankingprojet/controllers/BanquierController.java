@@ -122,7 +122,15 @@ public class BanquierController {
 
 			model.addAttribute("Compte",new Compte());
 			return "Ajout_Compte";
-		}	
+		}
+	  @RequestMapping("/banquier/home")
+           public String home(Model model)
+         {
+    	model.addAttribute("List_users",userRepository.findBySpecificRoles(1));
+    	model.addAttribute("List_agences",agenceRepository.findAll());
+    	model.addAttribute("agent",agent);
+    	return "homeBanquier";
+        }
 	@RequestMapping("/banquier/Ajout_Compte/exec")
 	public String Ajout_Compte_exec(@Valid Compte Compte, BindingResult bindingResult, Model model)
 	{
@@ -230,6 +238,7 @@ public class BanquierController {
 	@RequestMapping("/banquier/form/edit")
 	public String edituser(@Valid User user,Model model)
 	{
+		try{
 		Optional<User> existing = userRepository.findById(user.getId());
           User user1=new User();
           user1=user;
@@ -238,7 +247,10 @@ public class BanquierController {
 	userRepository.save(user1);
 	model.addAttribute("List_users",userRepository.findBySpecificRoles(1));
 	model.addAttribute("List_agences",agenceRepository.findAll());
-	model.addAttribute("agent",agent);
+	model.addAttribute("agent",agent);}
+		catch(Exception e){
+		return "error"
+		}
 		return "homeBanquier";
 	}
 	@PostMapping("/banquier/signin")
