@@ -249,7 +249,7 @@ public class BanquierController {
 	model.addAttribute("List_agences",agenceRepository.findAll());
 	model.addAttribute("agent",agent);}
 		catch(Exception e){
-		return "error"
+		return "error";
 		}
 		return "homeBanquier";
 	}
